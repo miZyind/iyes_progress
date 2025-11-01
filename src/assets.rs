@@ -3,8 +3,8 @@ use std::marker::PhantomData;
 use bevy_asset::prelude::*;
 use bevy_asset::{LoadState, UntypedAssetId};
 use bevy_ecs::prelude::*;
-use bevy_state::state::FreelyMutableState;
 use bevy_platform::collections::HashSet;
+use bevy_state::state::FreelyMutableState;
 
 use crate::prelude::*;
 
@@ -14,7 +14,7 @@ use crate::prelude::*;
 /// run before/after [`AssetsLoading`] is checked every frame. For example, if
 /// you need to add more handles to track, your system should run before this.
 #[derive(SystemSet, Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct AssetsTrackProgress;
+pub struct AssetsTrackProgressSystems;
 
 /// Resource for tracking the loading of assets
 ///
