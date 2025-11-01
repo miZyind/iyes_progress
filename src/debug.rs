@@ -25,8 +25,10 @@ impl Default for ProgressDebug {
 pub(crate) fn rc_debug_progress<S: FreelyMutableState>(
     cfg_debug: Option<Res<ProgressDebug>>,
     cfg_state: Res<StateTransitionConfig<S>>,
-    state: Res<State<S>>,
+    state: Option<Res<State<S>>>,
 ) -> bool {
+    let Some(state) = state else { return false };
+
     cfg_debug.map(|cfg| cfg.enabled).unwrap_or(false)
         && cfg_state.map_from_to.contains_key(state.get())
 }
