@@ -51,7 +51,7 @@ pub struct ProgressPlugin<S: FreelyMutableState> {
 /// It is only useful in the schedule where progress checking occurs (`Last` by
 /// default).
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, SystemSet)]
-pub struct CheckProgressSet;
+pub struct CheckProgressSystems;
 
 impl<S: FreelyMutableState> Default for ProgressPlugin<S> {
     fn default() -> Self {
@@ -174,7 +174,7 @@ impl<S: FreelyMutableState> Plugin for ProgressPlugin<S> {
             self.check_progress_schedule,
             transition_if_ready::<S>
                 .run_if(rc_configured_state::<S>)
-                .in_set(CheckProgressSet),
+                .in_set(CheckProgressSystems),
         );
         app.add_systems(
             PostUpdate,
@@ -206,7 +206,7 @@ impl<S: FreelyMutableState> Plugin for ProgressPlugin<S> {
                 self.check_progress_schedule,
                 debug_progress::<S>
                     .run_if(rc_debug_progress::<S>)
-                    .in_set(CheckProgressSet)
+                    .in_set(CheckProgressSystems)
                     .before(transition_if_ready::<S>),
             );
         }
@@ -218,7 +218,7 @@ impl<S: FreelyMutableState> Plugin for ProgressPlugin<S> {
                 PostUpdate,
                 assets_progress::<S>
                     .track_progress::<S>()
-                    .in_set(AssetsTrackProgress)
+                    .in_set(AssetsTrackProgressSystems)
                     .run_if(rc_configured_state::<S>),
             );
             for s in self.transitions.map_from_to.keys() {
